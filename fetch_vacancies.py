@@ -102,11 +102,12 @@ def get_avg_salary_superjob(languages, api_key):
             found = vacancy['total']
             vacancy = vacancy['objects']            
             for salary in vacancy:
-                short_salary_data = dict()                
-                short_salary_data['payment_from'] = salary['payment_from']
-                short_salary_data['payment_to'] = salary['payment_to']
-                short_salary_data['currency'] = salary['currency']
-                salary_by_language.append(short_salary_data)
+                short_salary_by_language = {                
+                    'payment_from': salary['payment_from'],
+                    'payment_to': salary['payment_to'],
+                    'currency': salary['currency']
+                }
+                salary_by_language.append(short_salary_by_language)
             sleep(0.25)
             if not more:
                break
@@ -131,11 +132,12 @@ def create_salary_by_language(found, vacancy_proceed, avg_salary):
     
     if vacancy_proceed:
         avg_salary = int(avg_salary / vacancy_proceed) 
-    salary_data_by_language = dict()
-    salary_data_by_language['vacancies_found'] = found
-    salary_data_by_language['vacancies_processed'] = vacancy_proceed
-    salary_data_by_language['average_salary'] = avg_salary
-    return salary_data_by_language
+    salary_by_language = {
+        'vacancies_found': found,
+        'vacancies_processed': vacancy_proceed,
+        'average_salary': avg_salary
+    }
+    return salary_by_language
 
 
 def avr_salary_calc(from_salary, to_salary):
