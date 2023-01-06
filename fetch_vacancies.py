@@ -12,11 +12,11 @@ def main():
     languages = ['JavaScript', 'Java', 'Python', 'Ruby', 'PHP', 'C++',
         'Go', 'Shell', 'Scala', 'Swift']
     try:
-       print_salary_statistic(get_salary_hh(languages), 'HeadHunter Moscow')       
+       print_salary_statistic(get_avg_salary_hh(languages), 'HeadHunter Moscow')       
     except requests.HTTPError:
         print('Ошибка обращения к сайту hh.ru')
     try:
-        print_salary_statistic(get_salary_superjob(languages, superjob_api_key), 'SuperJob Moscow')
+        print_salary_statistic(get_avg_salary_superjob(languages, superjob_api_key), 'SuperJob Moscow')
     except requests.HTTPError:
         print('Ошибка обращения к сайту SuperJob.ru или неверный api_key')
 
@@ -36,7 +36,7 @@ def get_vacancies_hh(language, page):
     return response.json()
 
 
-def get_salary_hh(languages):
+def get_avg_salary_hh(languages):
     
     avg_salary_by_language = dict()
     found = 0
@@ -92,7 +92,7 @@ def get_vacancies_superjob(api_key, language, page):
       
     return response.json() 
 
-def get_salary_superjob(languages, api_key):
+def get_avg_salary_superjob(languages, api_key):
     
     avg_salary_by_language = dict()        
     for language in languages:        
