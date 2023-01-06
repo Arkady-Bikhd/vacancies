@@ -46,7 +46,7 @@ def get_avg_salary_hh(languages):
         salary_by_language = list()        
         for page in count(0):            
             vacancy = get_vacancies_hh(language, page) 
-            for _, salary in enumerate(vacancy['items']):
+            for salary in vacancy['items']:
                 salary = salary['salary']
                 if salary:            
                     salary_by_language.append(salary)
@@ -106,7 +106,7 @@ def get_avg_salary_superjob(languages, api_key):
             more = vacancy['more']
             found = vacancy['total']
             vacancy = vacancy['objects']            
-            for _, salary in enumerate(vacancy):
+            for salary in vacancy:
                 short_salary_data = dict()                
                 short_salary_data['payment_from'] = salary['payment_from']
                 short_salary_data['payment_to'] = salary['payment_to']
