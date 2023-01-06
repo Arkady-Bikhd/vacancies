@@ -55,7 +55,7 @@ def get_avg_salary_hh(languages):
                 found = vacancy['found']
                 break                           
         vacancy_proceed, avg_salary = count_salary(salary_by_language, predict_rub_salary_for_hh)               
-        avg_salary_by_language[language] = create_salary_data_by_language(found, vacancy_proceed, avg_salary)
+        avg_salary_by_language[language] = create_salary_by_language(found, vacancy_proceed, avg_salary)
     return avg_salary_by_language
 
 
@@ -111,7 +111,7 @@ def get_avg_salary_superjob(languages, api_key):
             if not more:
                break
         vacancy_proceed, avg_salary = count_salary(salary_by_language, predict_rub_salary_for_superJob)               
-        avg_salary_by_language[language] = create_salary_data_by_language(found, vacancy_proceed, avg_salary)
+        avg_salary_by_language[language] = create_salary_by_language(found, vacancy_proceed, avg_salary)
     return avg_salary_by_language
 
 
@@ -127,7 +127,7 @@ def count_salary(salary_by_language, get_predict_salary):
     return vacancy_proceed, sum_salary
 
 
-def create_salary_data_by_language(found, vacancy_proceed, avg_salary):
+def create_salary_by_language(found, vacancy_proceed, avg_salary):
     
     if vacancy_proceed:
         avg_salary = int(avg_salary / vacancy_proceed) 
