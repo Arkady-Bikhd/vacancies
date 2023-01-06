@@ -8,7 +8,7 @@ from terminaltables import AsciiTable
 
 def main():
     load_dotenv()
-    api_key_superjob = environ['API_KEY_SUPERJOB']
+    superjob_api_key = environ['SUPERJOB_API_KEY']
     languages = ['JavaScript', 'Java', 'Python', 'Ruby', 'PHP', 'C++',
         'Go', 'Shell', 'Scala', 'Swift']
     try:
@@ -16,7 +16,7 @@ def main():
     except requests.HTTPError:
         print('Ошибка обращения к сайту hh.ru')
     try:
-        print_salary_statistic(get_salary_superjob(languages, api_key_superjob), 'SuperJob Moscow')
+        print_salary_statistic(get_salary_superjob(languages, superjob_api_key), 'SuperJob Moscow')
     except requests.HTTPError:
         print('Ошибка обращения к сайту SuperJob.ru или неверный api_key')
 
