@@ -12,11 +12,11 @@ def main():
     languages = ['JavaScript', 'Java', 'Python', 'Ruby', 'PHP', 'C++',
         'Go', 'Shell', 'Scala', 'Swift']
     try:
-       print_salary_statistic(get_avg_salary_hh(languages), 'HeadHunter Moscow')       
+       print(create_salary_statistic(get_avg_salary_hh(languages), 'HeadHunter Moscow'))       
     except requests.HTTPError:
         print('Ошибка обращения к сайту hh.ru')
     try:
-        print_salary_statistic(get_avg_salary_superjob(languages, superjob_api_key), 'SuperJob Moscow')
+        print(create_salary_statistic(get_avg_salary_superjob(languages, superjob_api_key), 'SuperJob Moscow'))
     except requests.HTTPError:
         print('Ошибка обращения к сайту SuperJob.ru или неверный api_key')
 
@@ -162,7 +162,7 @@ def predict_rub_salary_for_superJob(vacancy):
     return avr_salary  
 
 
-def print_salary_statistic(salary, title):
+def create_salary_statistic(salary, title):
     
     table_statistic = [
             ['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']
@@ -171,8 +171,8 @@ def print_salary_statistic(salary, title):
         table_statistic.append(list([language, language_data['vacancies_found'], 
         language_data['vacancies_processed'], language_data['average_salary']]))
     table_instance = AsciiTable(table_statistic, title)    
-    print(table_instance.table)
-    print()
+    return table_instance.table
+    
 
 if __name__ == '__main__':
     main()
