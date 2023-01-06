@@ -23,10 +23,12 @@ def main():
 
 def get_vacancies_hh(language, page):
 
+    area = 4
+    period = 30
     payload = {
         'text': f'Программист {language}',
-        'area': 1,
-        'period': 30,
+        'area': area,
+        'period': period,
         'page': page,
         'per_page': 100
         }
@@ -80,9 +82,11 @@ def get_vacancies_superjob(api_key, language, page):
     headers = {
         'X-Api-App-Id': api_key
     }
+    town = 4
+    catalogue = 48
     params = {
-        't': 4,
-        'catalogues': 48,
+        't': town,
+        'catalogues': catalogue,
         'keyword': f'Программист {language}',
         'page' : page,
         'count' : 100,    
