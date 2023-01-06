@@ -67,12 +67,7 @@ def predict_rub_salary_for_hh(vacancy):
     if vacancy['currency']  != 'RUR':
         return 
     if vacancy['currency']:
-        if from_salary and to_salary:
-            avr_salary = (from_salary + to_salary) / 2
-        elif from_salary:
-            avr_salary = 1.2 * from_salary
-        elif to_salary:
-            avr_salary = 0.8 * to_salary
+        avr_salary = avr_salary_calc(from_salary, to_salary)
     
     return avr_salary     
 
@@ -143,18 +138,25 @@ def create_salary_data_by_language(found, vacancy_proceed, avg_salary):
     return salary_data_by_language
 
 
+def avr_salary_calc(from_salary, to_salary):
+    
+    avr_salary = 0
+    if from_salary and to_salary:
+        avr_salary = (from_salary + to_salary) / 2
+    elif from_salary:
+        avr_salary = 1.2 * from_salary
+    elif to_salary:
+        avr_salary = 0.8 * to_salary
+    return avr_salary
+
+
 def predict_rub_salary_for_superJob(vacancy):
 
     avr_salary = None
     from_salary = vacancy['payment_from']
     to_salary = vacancy['payment_to']    
     if vacancy['currency'] == 'rub':
-        if from_salary and to_salary:
-            avr_salary = (from_salary + to_salary) / 2
-        elif from_salary:
-            avr_salary = 1.2 * from_salary
-        elif to_salary:
-            avr_salary = 0.8 * to_salary
+        avr_salary = avr_salary_calc(from_salary, to_salary)
     return avr_salary  
 
 
