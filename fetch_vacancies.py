@@ -41,18 +41,18 @@ def get_salary_hh(languages):
     avg_salary_by_language = dict()
     found = 0
     for language in languages:        
-        salary_data = list()        
+        salary_by_language = list()        
         for page in count(0):            
-            data = get_vacancies_hh(language, page) 
-            for _, salary in enumerate(data['items']):
+            vacancy = get_vacancies_hh(language, page) 
+            for _, salary in enumerate(vacancy['items']):
                 salary = salary['salary']
                 if salary:            
-                    salary_data.append(salary)
+                    salary_by_language.append(salary)
             sleep(0.25)
-            if page >= data['pages'] - 1:
-                found = data['found']
+            if page >= vacancy['pages'] - 1:
+                found = vacancy['found']
                 break                           
-        vacancy_proceed, avg_salary = count_salary(salary_data, predict_rub_salary_for_hh)               
+        vacancy_proceed, avg_salary = count_salary(salary_by_language, predict_rub_salary_for_hh)               
         avg_salary_by_language[language] = create_salary_data_by_language(found, vacancy_proceed, avg_salary)
     return avg_salary_by_language
 
@@ -96,31 +96,31 @@ def get_salary_superjob(languages, api_key):
     
     avg_salary_by_language = dict()        
     for language in languages:        
-        salary_data = list()
+        salary_by_language = list()
         for page in count(0):
-            data = get_vacancies_superjob(api_key, language, page)
-            more = data['more']
-            found = data['total']
-            data = data['objects']            
-            for _, salary in enumerate(data):
+            vacancy = get_vacancies_superjob(api_key, language, page)
+            more = vacancy['more']
+            found = vacancy['total']
+            vacancy = vacancy['objects']            
+            for _, salary in enumerate(vacancy):
                 short_salary_data = dict()                
                 short_salary_data['payment_from'] = salary['payment_from']
                 short_salary_data['payment_to'] = salary['payment_to']
                 short_salary_data['currency'] = salary['currency']
-                salary_data.append(short_salary_data)
+                salary_by_language.append(short_salary_data)
             sleep(0.25)
             if not more:
                break
-        vacancy_proceed, avg_salary = count_salary(salary_data, predict_rub_salary_for_superJob)               
+        vacancy_proceed, avg_salary = count_salary(salary_by_language, predict_rub_salary_for_superJob)               
         avg_salary_by_language[language] = create_salary_data_by_language(found, vacancy_proceed, avg_salary)
     return avg_salary_by_language
 
 
-def count_salary(salary_data, get_predict_salary):
+def count_salary(salary_by_language, get_predict_salary):
 
     vacancy_proceed = 0
     sum_salary = 0        
-    for salary in salary_data:
+    for salary in salary_by_language:
         predict_salary = get_predict_salary(salary)               
         if  predict_salary:
             sum_salary +=  predict_salary
@@ -156,13 +156,13 @@ def predict_rub_salary_for_superJob(vacancy):
 
 def print_salary_statistic(salary, title):
     
-    table_data = [
+    table_statistic = [
             ['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']
     ]
     for language, language_data in salary.items():
-        table_data.append(list([language, language_data['vacancies_found'], 
+        table_statistic.append(list([language, language_data['vacancies_found'], 
         language_data['vacancies_processed'], language_data['average_salary']]))
-    table_instance = AsciiTable(table_data, title)    
+    table_instance = AsciiTable(table_statistic, title)    
     print(table_instance.table)
     print()
 
