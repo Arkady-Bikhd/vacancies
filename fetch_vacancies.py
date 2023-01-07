@@ -67,7 +67,7 @@ def predict_rub_salary_for_hh(vacancy):
     if vacancy['currency']  != 'RUR':
         return 
     if vacancy['currency']:
-        avr_salary = avr_salary_calc(from_salary, to_salary)
+        avr_salary = calc_avr_salary(from_salary, to_salary)
     
     return avr_salary     
 
@@ -167,9 +167,9 @@ def create_salary_statistic(salary, title):
     table_statistic = [
             ['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']
     ]
-    for language, language_data in salary.items():
-        table_statistic.append(list([language, language_data['vacancies_found'], 
-        language_data['vacancies_processed'], language_data['average_salary']]))
+    for language, avg_salary in salary.items():
+        table_statistic.append(list([language, avg_salary['vacancies_found'], 
+        avg_salary['vacancies_processed'], avg_salary['average_salary']]))
     table_instance = AsciiTable(table_statistic, title)    
     return table_instance.table
     
