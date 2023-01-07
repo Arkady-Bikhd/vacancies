@@ -45,14 +45,14 @@ def get_avg_salary_hh(languages):
     for language in languages:        
         salary_by_language = list()        
         for page in count(0):            
-            vacancy = get_vacancies_hh(language, page) 
-            for salary in vacancy['items']:
+            vacancies = get_vacancies_hh(language, page) 
+            for salary in vacancies['items']:
                 salary = salary['salary']
                 if salary:            
                     salary_by_language.append(salary)
             sleep(0.25)
-            if page >= vacancy['pages'] - 1:
-                found = vacancy['found']
+            if page >= vacancies['pages'] - 1:
+                found = vacancies['found']
                 break                           
         vacancy_proceed, avg_salary = count_salary(salary_by_language, predict_rub_salary_for_hh)               
         avg_salary_by_language[language] = create_salary_by_language(found, vacancy_proceed, avg_salary)
@@ -97,11 +97,11 @@ def get_avg_salary_superjob(languages, api_key):
     for language in languages:        
         salary_by_language = list()
         for page in count(0):
-            vacancy = get_vacancies_superjob(api_key, language, page)
-            more = vacancy['more']
-            found = vacancy['total']
-            vacancy = vacancy['objects']            
-            for salary in vacancy:
+            vacancies = get_vacancies_superjob(api_key, language, page)
+            more = vacancies['more']
+            found = vacancies['total']
+            vacancies = vacancies['objects']            
+            for salary in vacancies:
                 short_salary_by_language = {                
                     'payment_from': salary['payment_from'],
                     'payment_to': salary['payment_to'],
