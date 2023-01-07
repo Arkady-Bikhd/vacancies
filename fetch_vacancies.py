@@ -140,7 +140,7 @@ def create_salary_by_language(found, vacancy_proceed, avg_salary):
     return salary_by_language
 
 
-def avr_salary_calc(from_salary, to_salary):
+def calc_avr_salary(from_salary, to_salary):
     
     avr_salary = 0
     if from_salary and to_salary:
@@ -158,7 +158,7 @@ def predict_rub_salary_for_superJob(vacancy):
     from_salary = vacancy['payment_from']
     to_salary = vacancy['payment_to']    
     if vacancy['currency'] == 'rub':
-        avr_salary = avr_salary_calc(from_salary, to_salary)
+        avr_salary = calc_avr_salary(from_salary, to_salary)
     return avr_salary  
 
 
